@@ -13,7 +13,6 @@ import android.webkit.WebViewClient;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String LOCAL_FILE = "file:///android_asset/index.html";
     private static final String MyURL = "http://88.166.207.71:8080/stream/webrtc";
     private String tag;
     private WebView mWebView;
