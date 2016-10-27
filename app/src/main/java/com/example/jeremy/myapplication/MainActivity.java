@@ -16,7 +16,7 @@ import android.webkit.WebViewClient;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String MyURL = "http://88.166.207.71:5000/";
+    private static final String MyURL = "https://88.166.207.71:5000/";
     private String tag;
     private WebView mWebView;
 
