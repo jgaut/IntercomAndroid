@@ -3,12 +3,14 @@ package com.example.jeremy.myapplication;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.PermissionRequest;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -16,7 +18,7 @@ import android.webkit.WebViewClient;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String MyURL = "https://88.166.207.71:5000/";
+    private static final String MyURL = "https://88.166.207.71:5000";
     private String tag;
     private WebView mWebView;
 
@@ -33,7 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Set a web view client and a chrome client
-        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed();
+            }
+        });
         mWebView.setWebChromeClient(new WebChromeClient() {
             // Need to accept permissions to use the camera and audio
             @Override
@@ -51,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mWebView.loadUrl(MyURL);
+
 
         PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
